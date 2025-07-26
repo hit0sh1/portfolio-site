@@ -1,24 +1,23 @@
 const skills = {
   frontend: [
-    { name: 'React', level: 90 },
-    { name: 'Next.js', level: 85 },
-    { name: 'TypeScript', level: 85 },
-    { name: 'Tailwind CSS', level: 90 },
-    { name: 'Vue.js', level: 75 },
+    'React',
+    'Next.js',
+    'TypeScript',
+    'Tailwind CSS',
   ],
   backend: [
-    { name: 'Node.js', level: 85 },
-    { name: 'Express', level: 80 },
-    { name: 'Python', level: 75 },
-    { name: 'PostgreSQL', level: 80 },
-    { name: 'MongoDB', level: 75 },
+    'Node.js',
+    'PostgreSQL',
+    'MongoDB',
+    'Supabase',
+    'Firebase',
   ],
   tools: [
-    { name: 'Git', level: 90 },
-    { name: 'Docker', level: 80 },
-    { name: 'AWS', level: 75 },
-    { name: 'CI/CD', level: 80 },
-    { name: 'Vercel', level: 85 },
+    'Git',
+    'Docker',
+    'AWS',
+    'CI/CD',
+    'Vercel',
   ],
 }
 
@@ -32,60 +31,42 @@ export default function SkillsSection() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-semibold mb-6 text-center">Frontend</h3>
-            <div className="space-y-4">
+            <div className="flex flex-wrap gap-3">
               {skills.frontend.map((skill) => (
-                <div key={skill.name}>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-700">{skill.name}</span>
-                    <span className="text-sm text-gray-600">{skill.level}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                </div>
+                <span
+                  key={skill}
+                  className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
+                >
+                  {skill}
+                </span>
               ))}
             </div>
           </div>
           
           <div>
             <h3 className="text-xl font-semibold mb-6 text-center">Backend</h3>
-            <div className="space-y-4">
+            <div className="flex flex-wrap gap-3">
               {skills.backend.map((skill) => (
-                <div key={skill.name}>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-700">{skill.name}</span>
-                    <span className="text-sm text-gray-600">{skill.level}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-green-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                </div>
+                <span
+                  key={skill}
+                  className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium"
+                >
+                  {skill}
+                </span>
               ))}
             </div>
           </div>
           
           <div>
             <h3 className="text-xl font-semibold mb-6 text-center">Tools & Others</h3>
-            <div className="space-y-4">
+            <div className="flex flex-wrap gap-3">
               {skills.tools.map((skill) => (
-                <div key={skill.name}>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-700">{skill.name}</span>
-                    <span className="text-sm text-gray-600">{skill.level}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-purple-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                </div>
+                <span
+                  key={skill}
+                  className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium"
+                >
+                  {skill}
+                </span>
               ))}
             </div>
           </div>

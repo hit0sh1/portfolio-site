@@ -1,47 +1,113 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
 const projects = [
   {
     id: 1,
-    title: 'ECサイトプラットフォーム',
-    description: 'Next.js、TypeScript、Stripe APIを使用した完全なEコマースソリューション。商品管理、決済処理、在庫管理機能を実装。',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Stripe', 'PostgreSQL'],
-    image: '/api/placeholder/600/400',
-    github: 'https://github.com',
-    demo: 'https://demo.com',
+    title: 'トライアスロンコミュニティサイト',
+    description: 'トライアスロンコミュニティのためのWebサイト。イベント情報の管理、メンバー登録、コミュニティ機能を実装。',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel', 'React'],
+    github: 'https://github.com/hit0sh1/triathlon-community-site',
+    demo: 'https://triathlon-community-site.vercel.app/',
   },
   {
     id: 2,
-    title: 'タスク管理アプリケーション',
-    description: 'チーム向けのリアルタイムコラボレーションツール。ドラッグ&ドロップ、リアルタイム更新、通知機能を搭載。',
-    technologies: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Redux'],
-    image: '/api/placeholder/600/400',
-    github: 'https://github.com',
-    demo: 'https://demo.com',
+    title: 'クイズアプリ',
+    description: 'インタラクティブなクイズアプリケーション。多様なクイズ形式とスコア管理機能を搭載。',
+    technologies: ['React', 'JavaScript', 'CSS', 'Vercel'],
+    github: 'https://github.com/hit0sh1/quiz-app',
+    demo: 'https://quiz-app-seven-orcin-64.vercel.app/',
   },
   {
     id: 3,
-    title: 'SNSダッシュボード',
-    description: '複数のSNSプラットフォームを統合管理するダッシュボード。分析機能と自動投稿機能を実装。',
-    technologies: ['Vue.js', 'Express', 'Chart.js', 'Redis', 'Docker'],
-    image: '/api/placeholder/600/400',
-    github: 'https://github.com',
-    demo: 'https://demo.com',
+    title: 'トライスーツECサイト',
+    description: 'トライアスロン用ウェアの専門ECサイト。商品管理、ショッピングカート、決済機能を実装。',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel', 'E-commerce'],
+    github: 'https://github.com/hit0sh1/trisuit-store',
+    demo: 'https://trisuit-store-8i4vxwqyn-hit0sh1s-projects.vercel.app/',
+  },
+  {
+    id: 4,
+    title: 'イベントサイト',
+    description: 'トライアスロンイベント「あらはトライアスロン」の公式サイト。イベント情報、参加登録機能を実装。',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+    github: 'https://github.com/hit0sh1/araha-triathlon',
+    demo: 'https://araha-triathlon.vercel.app/',
   },
 ]
 
+interface OGPData {
+  title?: string
+  description?: string
+  image?: string
+  url?: string
+}
+
 export default function ProjectsSection() {
+  const [ogpImages, setOgpImages] = useState<{ [key: number]: string }>({})
+
+  useEffect(() => {
+    const fetchOGPImages = async () => {
+      const imagePromises = projects.map(async (project) => {
+        try {
+          console.log(`Fetching OGP for project ${project.id}:`, project.demo)
+          const response = await fetch(`/api/ogp?url=${encodeURIComponent(project.demo)}`)
+          console.log(`Response status for ${project.demo}:`, response.status)
+          
+          if (!response.ok) {
+            console.error(`API request failed for ${project.demo}:`, response.status, response.statusText)
+            return { id: project.id, image: `/project-placeholder.svg` }
+          }
+          
+          const data: OGPData = await response.json()
+          console.log(`OGP data for ${project.demo}:`, data)
+          
+          const finalImage = data.image || `/project-placeholder.svg`
+          console.log(`Final image for ${project.demo}:`, finalImage)
+          
+          return { id: project.id, image: finalImage }
+        } catch (error) {
+          console.error('Failed to fetch OGP for', project.demo, error)
+          return { id: project.id, image: `/project-placeholder.svg` }
+        }
+      })
+
+      const results = await Promise.all(imagePromises)
+      const imageMap = results.reduce((acc, { id, image }) => {
+        acc[id] = image
+        return acc
+      }, {} as { [key: number]: string })
+
+      setOgpImages(imageMap)
+    }
+
+    fetchOGPImages()
+  }, [])
+
   return (
     <section id="projects" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
           Projects
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
           {projects.map((project) => (
             <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-300 relative">
-                <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                  Image Placeholder
-                </div>
+              <div className="h-48 relative overflow-hidden">
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-full"
+                >
+                  <img 
+                    src={ogpImages[project.id] || `/project-placeholder.svg`} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                    loading="lazy"
+                  />
+                </a>
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{project.title}</h3>

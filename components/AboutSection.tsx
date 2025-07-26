@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function AboutSection() {
   return (
     <section id="about" className="py-20 bg-white">
@@ -7,7 +9,15 @@ export default function AboutSection() {
         </h2>
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="w-64 h-64 mx-auto bg-gray-300 rounded-full"></div>
+            <div className="w-64 h-64 mx-auto rounded-full overflow-hidden shadow-lg">
+              <Image 
+                src="/顔.png" 
+                alt="プロフィール画像" 
+                width={256}
+                height={256}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
           <div>
             <h3 className="text-2xl font-semibold mb-4">情熱的なWebエンジニア</h3>
@@ -21,15 +31,15 @@ export default function AboutSection() {
             <div className="flex gap-6 mt-6">
               <div>
                 <h4 className="font-semibold text-lg mb-2">経験年数</h4>
-                <p className="text-3xl font-bold text-blue-600">5+</p>
+                <p className="text-3xl font-bold text-blue-600">1</p>
               </div>
               <div>
                 <h4 className="font-semibold text-lg mb-2">完成プロジェクト</h4>
-                <p className="text-3xl font-bold text-blue-600">20+</p>
+                <p className="text-3xl font-bold text-blue-600">4</p>
               </div>
               <div>
                 <h4 className="font-semibold text-lg mb-2">技術スタック</h4>
-                <p className="text-3xl font-bold text-blue-600">10+</p>
+                <p className="text-3xl font-bold text-blue-600">8+</p>
               </div>
             </div>
           </div>
